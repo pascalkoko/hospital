@@ -70,7 +70,7 @@ public class PatientController {
 
         }
         patientRepository.save(patient);
-        return "formPatients";
+        return "redirect:/index?keyword="+patient.getNomPatient(); // redirection vers index tout en recuperant le nom du patient ajouté comme mot clé
     }
 
 
