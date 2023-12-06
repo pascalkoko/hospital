@@ -33,9 +33,25 @@
                             <li><a class="dropdown-item" th:href="@{/index}">Liste  Des Patients</a></li>
                         </ul>
                     </li>
-
                 </ul>
-
+            </div>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active"  href="#"  role="button"
+                           data-bs-toggle="dropdown"
+                           th:text="${#authentication.name}">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Profil</a></li>
+                            <li>
+                                <form method="post" th:action="@{/logout}">
+                                    <button class="dropdown-item" type="submit">Deconnexion</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

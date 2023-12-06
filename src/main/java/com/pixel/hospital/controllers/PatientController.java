@@ -82,4 +82,8 @@ public class PatientController {
          return "editPatient";
      }
 
+     @GetMapping("/")
+    public String home(){
+        return "redirect:/index"
+    }
 }
