@@ -69,10 +69,17 @@ public class PatientController {
             return "formPatients";
 
         }
-
         patientRepository.save(patient);
         return "formPatients";
     }
 
+
+     // ----------------------------- Mise à jour des informations d'un patient ------------------
+     @GetMapping("/editPatient")
+     public   String editPatient(Model model, @RequestParam(name = "id") Long id){
+          Patient patientRechercherParId = patientRepository.findById(id).get();
+         model.addAttribute("patientRechercherParId", patientRechercherParId);
+         return "editPatient";
+     }
 
 }
