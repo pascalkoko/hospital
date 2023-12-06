@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -53,7 +54,16 @@ public class PatientController {
     }
 
     @GetMapping("/formPatients")
-    public   String formPatient(){return "formPatients";
+    public   String formPatient(Model model){
+        model.addAttribute("patient", new Patient());
+        return "formPatients";
+    }
+
+ // Enregistrement d'un  nouveau Patient dans la Base des données .......
+    @PostMapping("/savePatient")
+    public   String savePatient(Patient patient){
+        patientRepository.save(patient);
+        return "formPatients";
     }
 
 
