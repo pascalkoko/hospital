@@ -2,11 +2,13 @@ package com.pixel.hospital.controllers;
 
 import com.pixel.hospital.entities.Patient;
 import com.pixel.hospital.repository.PatientRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,7 +63,13 @@ public class PatientController {
 
  // Enregistrement d'un  nouveau Patient dans la Base des données .......
     @PostMapping("/savePatient")
-    public   String savePatient(Patient patient){
+    public   String savePatient(@Valid  Patient patient, BindingResult bindingResult){// en cas d'erreur on stock le message d'erreur dans BingingResult
+        // avant d'enregistrement dans la base des données , je teste si l'objet bindingResult ne contient pas de message d'erreur
+        if (bindingResult.hasErrors()){
+            return "formPatients";
+
+        }
+
         patientRepository.save(patient);
         return "formPatients";
     }
