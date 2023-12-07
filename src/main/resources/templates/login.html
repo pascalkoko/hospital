@@ -10,7 +10,7 @@
     <div class="row mt-5">
      <div class="col-md-4 offset-4">
          <div class="card btn-outline-primary">
-             <div class="card-header text-bg-dark"><h4>Hsp System<h4/></div>
+
              <div class="card-body">
                  <form method="post" th:action="@{/login}">
                      <div class="row mb-3">
@@ -27,7 +27,10 @@
                      </div>
                      <div class="row">
                          <div class="col-sm-10 offset-2">
-                             <button type="submit" class="btn btn-warning"> Se Connecter</button>
+                             <label class="form-label">
+                                 <input type="checkbox" class="form-check-input" name="remember-me" >Remember me
+                             </label><br/>
+                             <button type="submit" class="btn btn-success"> Se Connecter</button>
                          </div>
                      </div>
                  </form>

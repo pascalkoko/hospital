@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,6 +40,7 @@ public class PatientController {
     }
 
     @GetMapping("/admin/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public   String delete(@RequestParam(name="id") Long id,
                            @RequestParam(name = "keyword", defaultValue = "") String motCle,
                            @RequestParam(name = "page", defaultValue = "0") int page){
@@ -49,6 +51,7 @@ public class PatientController {
     }
 
     @GetMapping("/admin/formPatients")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public   String formPatient(Model model){
         model.addAttribute("patient", new Patient());
         return "formPatients";
@@ -56,6 +59,7 @@ public class PatientController {
 
  // Enregistrement d'un  nouveau Patient dans la Base des données .......
     @PostMapping("/admin/savePatient")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public   String savePatient(@Valid  Patient patient, BindingResult bindingResult){// en cas d'erreur on stock le message d'erreur dans BingingResult
         // avant d'enregistrement dans la base des données , je teste si l'objet bindingResult ne contient pas de message d'erreur
         if (bindingResult.hasErrors()){
@@ -69,6 +73,7 @@ public class PatientController {
 
      // ----------------------------- Mise à jour des informations d'un patient ------------------
      @GetMapping("/admin/editPatient")
+     @PreAuthorize("hasRole('ROLE_ADMIN')")
      public   String editPatient(Model model, @RequestParam(name = "id") Long id){
           Patient patientRechercherParId = patientRepository.findById(id).get();
          model.addAttribute("patientRechercherParId", patientRechercherParId);

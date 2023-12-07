@@ -2,6 +2,7 @@ package com.pixel.hospital.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -11,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true) // je prepare la securité des methodes definies dans mon controleur
 public class SecurityConfig {
 
      private PasswordEncoder passwordEncoder;
@@ -27,13 +29,14 @@ public class SecurityConfig {
             );
         }
 
-    //on cree une methode qui permet de retourner securityFilterChain (l'annotation Bean permet que la methode puisse s'executer au demarrage de l'application)
+    //on cree une methode qui permet de retourner securityFilterChain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.formLogin().loginPage("/login").permitAll();
+        httpSecurity.rememberMe();
         httpSecurity.authorizeHttpRequests().requestMatchers("/webjars/**").permitAll();
-        httpSecurity.authorizeHttpRequests().requestMatchers("/user/**").hasRole("USER");
-        httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN");
+        //httpSecurity.authorizeHttpRequests().requestMatchers("/user/**").hasRole("USER");
+        //httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN");
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
 
         // on securise les accès  dans l'URL pour eviter aux utilisateurs de taper n'importe  quoi dans l'URL
