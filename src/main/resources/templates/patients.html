@@ -35,7 +35,7 @@
                         <td  th:text="${patient.dateNaissance}"></td>
                         <td  th:text="${patient.malade}"></td>
                         <td  th:text="${patient.score}"></td>
-                        <td>
+                        <td th:if="${#authorization.expr('hasRole(''ADMIN'')')}">
                             <a  onclick=" javascript: return confirm('Etes-vous sur  de vouloir Supprimer?')"
                                 th:href="@{/admin/delete(id=${patient.id}, keyword =${motCle}, page=${currentPage})}" class="btn btn-danger">
                                 <i class="bi bi-trash"></i>
