@@ -34,6 +34,10 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests().requestMatchers("/user/**").hasRole("USER");
         httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN");
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
+
+        // on securise les accès  dans l'URL pour eviter aux utilisateurs de taper n'importe  quoi dans l'URL
+        httpSecurity.exceptionHandling().accessDeniedPage("/accesNonAutorise");
+
         return httpSecurity.build();
     }
 }
