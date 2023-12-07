@@ -10,4 +10,9 @@ public class SecurityController {
     public String accesNonAutorise(){
         return "nonAutorise";
     }
+
+    @GetMapping("/login")
+    public String seConnecter(){
+        return "login";
+    }
 }

@@ -30,7 +30,8 @@ public class SecurityConfig {
     //on cree une methode qui permet de retourner securityFilterChain (l'annotation Bean permet que la methode puisse s'executer au demarrage de l'application)
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.formLogin();
+        httpSecurity.formLogin().loginPage("/login").permitAll();
+        httpSecurity.authorizeHttpRequests().requestMatchers("/webjars/**").permitAll();
         httpSecurity.authorizeHttpRequests().requestMatchers("/user/**").hasRole("USER");
         httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN");
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();

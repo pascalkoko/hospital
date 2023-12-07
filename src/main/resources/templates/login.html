@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="row mt-5">
+     <div class="col-md-4 offset-4">
+         <div class="card btn-outline-primary">
+             <div class="card-header text-bg-dark"><h4>Hsp System<h4/></div>
+             <div class="card-body">
+                 <form method="post" th:action="@{/login}">
+                     <div class="row mb-3">
+                         <label for="username" class="col-sm-2 col-form-label">Username</label>
+                         <div class="col-sm-10">
+                             <input type="text" class="form-control" id="username" name="username" placeholder="Nom d'utilisateur">
+                         </div>
+                     </div>
+                     <div class="row mb-3">
+                         <label for="password" class="col-sm-2 col-form-label">Password</label>
+                         <div class="col-sm-10">
+                             <input type="password" class="form-control" id="password" name="password" placeholder="Mot de Passe">
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-sm-10 offset-2">
+                             <button type="submit" class="btn btn-warning"> Se Connecter</button>
+                         </div>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+    </div>
+</body>
+</html>
