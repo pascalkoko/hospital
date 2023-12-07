@@ -18,9 +18,9 @@
                 <div class="card-header text-bg-success"> <h4>Editer Patient</h4></div>
                 <div class="card-body">
                     <div class="p-4">
-                        <form method="post" th:action="@{/savePatient}">
+                        <form method="post" th:action="@{/admin/savePatient}">
                             <div class="mb-2">
-                                <label class="form-label">ID : </label><label class="form-label" style="color: darkred" th:text="${patientRechercherParId.id}"></label>
+                                <label class="form-label">ID : </label><label class="form-label" style="color: red" th:text="${patientRechercherParId.id}"></label>
                                 <input type="hidden" name="id" class="form-control" th:value="${patientRechercherParId.id}">
                             </div>
                             <div class="mb-2">

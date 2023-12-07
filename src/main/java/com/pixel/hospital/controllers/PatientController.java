@@ -20,7 +20,7 @@ public class PatientController {
     // injection de dependance par le constructeur avec parametres(utilisation des annotations Lombok)
     private PatientRepository patientRepository;
 
-    @GetMapping("/index")
+    @GetMapping("/user/index")
     public String index(Model model,
                         @RequestParam(name ="page", defaultValue = "0") int p,
                         @RequestParam(name ="size", defaultValue = "5") int s,
@@ -38,31 +38,24 @@ public class PatientController {
         return "patients";
     }
 
-
-    @GetMapping("/delete")
+    @GetMapping("/admin/delete")
     public   String delete(@RequestParam(name="id") Long id,
                            @RequestParam(name = "keyword", defaultValue = "") String motCle,
                            @RequestParam(name = "page", defaultValue = "0") int page){
 
         patientRepository.deleteById(id);
 
-        return "redirect:/index?page="+page+"&keyword="+motCle;
+        return "redirect:/user/index?page="+page+"&keyword="+motCle;
     }
 
-    @GetMapping("/")
-    public   String delete(){
-
-        return "redirect:/index";
-    }
-
-    @GetMapping("/formPatients")
+    @GetMapping("/admin/formPatients")
     public   String formPatient(Model model){
         model.addAttribute("patient", new Patient());
         return "formPatients";
     }
 
  // Enregistrement d'un  nouveau Patient dans la Base des données .......
-    @PostMapping("/savePatient")
+    @PostMapping("/admin/savePatient")
     public   String savePatient(@Valid  Patient patient, BindingResult bindingResult){// en cas d'erreur on stock le message d'erreur dans BingingResult
         // avant d'enregistrement dans la base des données , je teste si l'objet bindingResult ne contient pas de message d'erreur
         if (bindingResult.hasErrors()){
@@ -70,20 +63,22 @@ public class PatientController {
 
         }
         patientRepository.save(patient);
-        return "redirect:/index?keyword="+patient.getNomPatient(); // redirection vers index tout en recuperant le nom du patient ajouté comme mot clé
+        return "redirect:/user/index?keyword="+patient.getNomPatient(); // redirection vers index tout en recuperant le nom du patient ajouté comme mot clé
     }
 
 
      // ----------------------------- Mise à jour des informations d'un patient ------------------
-     @GetMapping("/editPatient")
+     @GetMapping("/admin/editPatient")
      public   String editPatient(Model model, @RequestParam(name = "id") Long id){
           Patient patientRechercherParId = patientRepository.findById(id).get();
          model.addAttribute("patientRechercherParId", patientRechercherParId);
          return "editPatient";
      }
 
-     @GetMapping("/")
-    public String home(){
-        return "redirect:/index"
+    @GetMapping("/")
+    public   String home(){
+
+        return "redirect:/user/index";
     }
+
 }

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="navbar.html">
+      layout:decorate="navbar.html"
+>
 <head>
     <meta charset="UTF-8">
     <title>Nouveau Patient</title>
@@ -18,7 +19,7 @@
                 <div class="card-header text-bg-success"> <h4>Nouveau Patient</h4></div>
                 <div class="card-body">
                     <div class="p-4">
-                        <form method="post" th:action="@{/savePatient}">
+                        <form method="post" th:action="@{/admin/savePatient}">
                             <div class="mb-2">
                                 <label class="form-label"> Nom</label>
                                 <input type="text" name="nomPatient" class="form-control" th:value="${patient.nomPatient}">
