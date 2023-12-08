@@ -7,8 +7,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import java.util.Date;
 
@@ -47,6 +50,34 @@ public class HospitalApplication implements CommandLineRunner {
 		patientRepository.save(new Patient(null, " Adolphe", new Date(), false, 1012));
 	}
 
+   // insertion de quelques données test au demarrage de l'application dans la Base des données dans la table Utilisateur
+	@Bean
+	CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager){
+		PasswordEncoder passwordEncoder = passwordEncoder();
+
+       return args -> {
+
+		     UserDetails utilisteur1 = jdbcUserDetailsManager.loadUserByUsername("admin");
+             if (utilisteur1==null)
+   			jdbcUserDetailsManager.createUser(
+					   User.withUsername("admin").password(passwordEncoder.encode("123456")).roles("USER","ADMIN").build()
+			);
+
+		   UserDetails utilisteur2 = jdbcUserDetailsManager.loadUserByUsername("pascal");
+		   if (utilisteur2==null)
+		   jdbcUserDetailsManager.createUser(
+				   User.withUsername("pascal").password(passwordEncoder.encode("1234")).roles("USER").build()
+		   );
+
+		   UserDetails utilisteur3 = jdbcUserDetailsManager.loadUserByUsername("koko");
+		   if (utilisteur3==null)
+		   jdbcUserDetailsManager.createUser(
+				   User.withUsername("koko").password(passwordEncoder.encode("1234")).roles("USER").build()
+		   );
+
+
+	   };
+	}
 	@Bean
 	PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
