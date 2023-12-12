@@ -2,6 +2,8 @@ package com.pixel.hospital;
 
 import com.pixel.hospital.entities.Patient;
 import com.pixel.hospital.repository.PatientRepository;
+import com.pixel.hospital.security.entities.AppUser;
+import com.pixel.hospital.security.repo.AppUserRepository;
 import com.pixel.hospital.security.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,6 +23,8 @@ public class HospitalApplication implements CommandLineRunner {
 
 	@Autowired
 	private PatientRepository patientRepository;
+	@Autowired
+	AppUserRepository appUserRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HospitalApplication.class, args);
@@ -52,7 +56,7 @@ public class HospitalApplication implements CommandLineRunner {
 	}
 
    // insertion de quelques données test au demarrage de l'application dans la Base des données dans la table AppUser
-	@Bean
+	//@Bean
 	CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager){
 		PasswordEncoder passwordEncoder = passwordEncoder();
 
@@ -98,6 +102,25 @@ public class HospitalApplication implements CommandLineRunner {
 	@Bean
 	PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
+	}
+
+	// juste  une methode de test pour voir si je peux recuperer les informatioins de l'utilisateur dans la BAse des  données en vue de Deboguer  le probleme  de UserDaetails Service
+	//@Bean
+	public AppUser findUser(){
+
+		AppUser user = appUserRepository.findByUsername("user2");
+
+		System.out.println("*********************************USER INFOS**************************************************");
+		System.out.println("*********************************************************************************************");
+		System.out.println(user.getUserId());
+		System.out.println(user.getUsername());
+		System.out.println(user.getEmail());
+		System.out.println(user.getPassword());
+		System.out.println(user.getRoles());
+		System.out.println("*********************************USER INFOS**************************************************");
+		System.out.println("*********************************************************************************************");
+
+		return user;
 	}
 
 }
