@@ -2,6 +2,7 @@ package com.pixel.hospital;
 
 import com.pixel.hospital.entities.Patient;
 import com.pixel.hospital.repository.PatientRepository;
+import com.pixel.hospital.security.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -50,7 +51,7 @@ public class HospitalApplication implements CommandLineRunner {
 		patientRepository.save(new Patient(null, " Adolphe", new Date(), false, 1012));
 	}
 
-   // insertion de quelques données test au demarrage de l'application dans la Base des données dans la table Utilisateur
+   // insertion de quelques données test au demarrage de l'application dans la Base des données dans la table AppUser
 	@Bean
 	CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager){
 		PasswordEncoder passwordEncoder = passwordEncoder();
@@ -77,6 +78,22 @@ public class HospitalApplication implements CommandLineRunner {
 
 
 	   };
+	}
+
+	@Bean
+	CommandLineRunner commandLineRunnerUserDetails(UserAccountService userAccountService){
+		return args ->{
+			userAccountService.addNewRole("USER");
+			userAccountService.addNewRole("ADMIN");
+			userAccountService.addNewUser("user1","1234","user1@gmail.com","1234");
+			userAccountService.addNewUser("user2","1234","user2@gmail.com","1234");
+			userAccountService.addNewUser("admin1","123456","admin1@gmail.com","123456");
+			userAccountService.addRoleToUser("user1","USER");
+			userAccountService.addRoleToUser("user2","USER");
+			userAccountService.addRoleToUser("admin1","USER");
+			userAccountService.addRoleToUser("admin1","ADMIN");
+
+		};
 	}
 	@Bean
 	PasswordEncoder passwordEncoder(){
